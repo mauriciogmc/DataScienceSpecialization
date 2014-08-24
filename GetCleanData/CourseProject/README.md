@@ -6,7 +6,7 @@ This folder is for the course project for the Johns Hopkins Getting and Cleaning
 ### Overview
 This project is based on data from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip .
 A full description of the data used in this project can be found at [The UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
-The purpose of this project is to practice how to get and clean data, and as so we have to generate a tidy data set which summarizes information acquired from a movement sensor, used by 30 people under different activities.
+The purpose of this project is to demonstrate the ability to collect, work with, and clean a data set. It's necessary to generate a tidy data set which summarizes information acquired from a movement sensor, used by 30 people under different activities.
 
 .
 ### Project Instructions
