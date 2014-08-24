@@ -16,16 +16,17 @@ I have opted not to change the variable names, since it is already descriptive a
 
 This is the format of the tidy dataset created:
 
-"Subject" "Activity" "variable" "mean"
-1 "LAYING" "tBodyAcc-mean()-X" 0.22159824394
-1 "LAYING" "tBodyAcc-mean()-Y" -0.0405139534294
-1 "LAYING" "tBodyAcc-mean()-Z" -0.11320355358
-1 "LAYING" "tBodyAcc-std()-X" -0.9280564692
+"Subject" "Activity" "variable" "mean"  
+1 "LAYING" "tBodyAcc-mean()-X" 0.22159824394  
+1 "LAYING" "tBodyAcc-mean()-Y" -0.0405139534294  
+1 "LAYING" "tBodyAcc-mean()-Z" -0.11320355358  
+1 "LAYING" "tBodyAcc-std()-X" -0.9280564692  
 
 
 
 
-# This information is about the data in which our analysis was based on. More can be found at http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+### This information is about the data in which our analysis was based on. 
+More can be found at http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
 Data Set Information:
 
