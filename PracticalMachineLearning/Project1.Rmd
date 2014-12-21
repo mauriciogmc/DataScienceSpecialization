@@ -1,0 +1,77 @@
+Practical Machine Learning - Final Project
+========================================================
+
+Introduction
+------------
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, the goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset). 
+
+The training data for this project are available   [here](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv) and the tests data [here](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv) 
+
+This project aims to predic the way in which the exercises were made by random participants (to predict the "classe" variable, which ranges from A to E).
+
+Data Loading / Data Splitting
+---------------
+First, we load data from files
+```{r}
+pmlTraining<-read.csv("pml-training.csv", na.strings="NA")
+pmlTesting<-read.csv("pml-testing.csv", na.strings="NA")
+```
+
+Then we split the training set into two different sets: 80% for training and 20% for validation.
+```{r echo=FALSE}
+library(caret)
+```
+```{r}
+set.seed(44433)
+trainIndex <- createDataPartition(pmlTraining$classe, p = 0.8, list = FALSE)
+trainData <- pmlTraining[trainIndex, ]
+validationData <- pmlTraining[-trainIndex, ]
+```
+
+Data Cleaning
+-------------
+The first collumns are not important to predict results (classe), thus we remove them (x, user_name, raw_timestamp_part_1, raw_timestamp_part_2, new_window and num_window).
+```{r}
+trainData<-trainData[,8:ncol(trainData)]
+```
+
+Then, we remove columns which contains 90% or more NA values: 
+```{r}
+NANPerColumn<- apply(trainData,2,function(x) {sum(is.na(x))});
+colIndex = which(NANPerColumn <  nrow(trainData)*0.9)
+trainData <- trainData[,colIndex];
+```
+
+We also exclude colums with near zero variance, which won't help to predict:
+```{r}
+nzvCol <- nearZeroVar(trainData)
+trainData <- trainData[, -nzvCol]
+```
+
+Model Training and Validation
+-----------------------------
+We use random forest technique to model
+```{r}
+model_rf <- train(classe ~ .,  method="rf", data=trainData) 
+```
+
+It is possible to check that our model performs really well on the training data
+```{r}
+accuracy <- confusionMatrix(trainData$classe, predict(model_rf, trainData))
+accuracy
+```
+
+Now we'll check how our model behaves on the validation set, which was split from training set (this is to avoid overfitting).
+```{r}
+accuracy <- confusionMatrix(validationData$classe, predict(model_rf, validationData))
+accuracy
+```
+We see that the cross-validation performance is very good, about % accuracy. Out-of-sample error estimate is so .
+
+Test Set Prediction
+-------------------
+Finally, we use the model created to predict the "classe" variable from a set in which this variable is unknown:
+```{r}
+answers <- predict(model_rf,pmlTesting)
+answers
+```
